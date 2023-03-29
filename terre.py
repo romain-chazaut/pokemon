@@ -1,4 +1,8 @@
 import pokemon
+import normal
+import feu
+import eau
+import combat
 
 class Eau(pokemon):
     def __init__(self, puissance, defense, PV=100):
