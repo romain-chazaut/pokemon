@@ -19,3 +19,5 @@ class Pokemon:
 
     def get_nom(self):
         return self.__nom
+    
+    

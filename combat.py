@@ -31,10 +31,35 @@ class Combat:
             multiplicateur = 0.5
         elif isinstance(attaquant, Terre) and isinstance(defenseur, Eau):
             multiplicateur = 2
+        if isinstance(attaquant, Feu) and isinstance(defenseur, Terre):
+            multiplicateur = 2
+        elif isinstance(attaquant, Terre) and isinstance(defenseur, Feu):
+            multiplicateur = 0.5
+        if isinstance(attaquant, Eau) and isinstance(defenseur, Feu):
+            multiplicateur = 2
+        elif isinstance(attaquant, Feu) and isinstance(defenseur, Eau):
+            multiplicateur = 0.5
+        if isinstance(attaquant, Normal) and isinstance(defenseur, Eau):
+            multiplicateur = 0.75
+        elif isinstance(attaquant, Eau) and isinstance(defenseur, Normal):
+            multiplicateur = 1
+        if isinstance(attaquant, Normal) and isinstance(defenseur, Feu):
+            multiplicateur = 0.75
+        elif isinstance(attaquant, Feu) and isinstance(defenseur, Normal):
+            multiplicateur = 1
+        if isinstance(attaquant, Normal) and isinstance(defenseur, Terre):
+            multiplicateur = 0.75
+        elif isinstance(attaquant, Terre) and isinstance(defenseur, Normal):
+            multiplicateur = 1
 
+        
+        
         return attaquant.attaque * multiplicateur
 
     def attaquer(self, attaquant, defenseur):
         degats = self.calculer_degats(attaquant, defenseur)
         degats_reduits = max(degats - defenseur.defense, 0)
         defenseur.enlever_PV(degats_reduits)
+
+
+

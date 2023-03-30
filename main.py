@@ -10,12 +10,15 @@ def menu():
     choix = int(input("Entrez votre choix: "))
     return choix
 
+def menu_choix_pokemon():
+    print()
+
 def main():
     while True:
         choix = menu()
         if choix == 1:
-            pikachu = Normal("Pikachu", 5)
-            carapuce = Eau("Carapuce", 5)
+            pikachu = Normal("Pikachu", 4)
+            carapuce = Eau("Carapuce", 8)
             combat = Combat(pikachu, carapuce)
 
             while not combat.est_finie():
@@ -31,6 +34,27 @@ def main():
 
             print("Le vainqueur est :", combat.vainqueur())
             print("Le perdant est :", combat.perdant())
+
+         
+        if choix == 2:
+            salamèche = Feu("Salamèche", 1)
+            bulbizar = Terre("Bulbizar", 10)
+            combat = Combat(salamèche, bulbizar)
+
+            while not combat.est_finie():
+                print("Tour de :", salamèche.get_nom())
+                combat.attaquer(salamèche, bulbizar)
+                bulbizar.afficher_infos()
+                if combat.est_finie():
+                    break
+
+                print("Tour de :", bulbizar.get_nom())
+                combat.attaquer(bulbizar, salamèche)
+                salamèche.afficher_infos()
+
+            print("Le vainqueur est :", combat.vainqueur())
+            print("Le perdant est :", combat.perdant())
+
 
         elif choix == 0:
             print("Au revoir !")
