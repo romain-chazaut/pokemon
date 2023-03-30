@@ -1,11 +1,5 @@
-import pokemon
-import eau
-import terre
-import normal
-import combat
+from pokemon import Pokemon
 
-class Feu(pokemon):
-    def __init__(self, puissance, defense, PV=100):
-        self.puissance = puissance
-        self.defense = defense
-        self.__PV = PV
+class Feu(Pokemon):
+    def __init__(self, nom, niveau):
+        Pokemon.__init__(self, nom, niveau, attaque=60, defense=5)
