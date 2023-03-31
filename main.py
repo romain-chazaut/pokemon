@@ -3,64 +3,67 @@ from feu import Feu
 from eau import Eau
 from terre import Terre
 from combat import Combat
+from pokedex import Pokedex
+import time
+
 
 def menu():
     print("1. Lancer une partie")
+    print("2. Choisir son Pokemon")
     print("0. Quitter")
     choix = int(input("Entrez votre choix: "))
     return choix
+    
+def choisir_pokemon(pokedex):
+    print("Voici la liste des Pokemons disponibles :")
+    for i, pokemon in enumerate(pokedex.pokemon_list):
+        print(f"{i + 1}. {pokemon.get_nom()}")
 
-def menu_choix_pokemon():
-    print()
+    choix = int(input("Entrez le numéro du Pokemon choisi : "))
+    return pokedex.pokemon_list[choix - 1]
+
+
 
 def main():
+    pokedex = Pokedex()
+    pokemon_joueur = None
     while True:
         choix = menu()
+
         if choix == 1:
-            pikachu = Normal("Pikachu", 4)
-            carapuce = Eau("Carapuce", 8)
-            combat = Combat(pikachu, carapuce)
+            if pokemon_joueur is None:
+                pokemon_joueur = pokedex.choisir_pokemon()
+
+            combat = Combat(pokemon_joueur, pokedex.choisir_pokemon())
 
             while not combat.est_finie():
-                print("Tour de :", pikachu.get_nom())
-                combat.attaquer(pikachu, carapuce)
-                carapuce.afficher_infos()
+                print("Tour de :", combat.pokemon1.get_nom())
+                combat.attaquer(combat.pokemon1, combat.pokemon2)
+                combat.pokemon2.afficher_infos()
+                time.sleep(1)
                 if combat.est_finie():
                     break
 
-                print("Tour de :", carapuce.get_nom())
-                combat.attaquer(carapuce, pikachu)
-                pikachu.afficher_infos()
+                print("Tour de :", combat.pokemon2.get_nom())
+                combat.attaquer(combat.pokemon2, combat.pokemon1)
+                combat.pokemon1.afficher_infos()
+                time.sleep(1)
 
             print("Le vainqueur est :", combat.vainqueur())
             print("Le perdant est :", combat.perdant())
 
-         
-        if choix == 2:
-            salamèche = Feu("Salamèche", 1)
-            bulbizar = Terre("Bulbizar", 10)
-            combat = Combat(salamèche, bulbizar)
+            pokemon_joueur = None
 
-            while not combat.est_finie():
-                print("Tour de :", salamèche.get_nom())
-                combat.attaquer(salamèche, bulbizar)
-                bulbizar.afficher_infos()
-                if combat.est_finie():
-                    break
-
-                print("Tour de :", bulbizar.get_nom())
-                combat.attaquer(bulbizar, salamèche)
-                salamèche.afficher_infos()
-
-            print("Le vainqueur est :", combat.vainqueur())
-            print("Le perdant est :", combat.perdant())
-
+        elif choix == 2:
+            pokemon_joueur = pokedex.choisir_pokemon()
 
         elif choix == 0:
             print("Au revoir !")
             break
+
         else:
             print("Choix invalide. Veuillez réessayer.")
+
 
 if __name__ == "__main__":
     main()
